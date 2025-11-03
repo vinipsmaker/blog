@@ -5,8 +5,8 @@ import sitemap from "@astrojs/sitemap";
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://cleison-oliveira.github.io/astro-typist-blog-template',
-  base: '/astro-typist-blog-template/',
+  site: 'https://vinipsmaker.github.io/blog',
+  base: '/blog/',
   
   integrations: [
     sitemap({
