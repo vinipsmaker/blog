@@ -99,18 +99,16 @@ Pratt parser/evaluator for a basic arithmetic language:
 import:
     parser/lex open
 
-class Token(nud_impl, led_impl, lbp):
+class Token(~nud: nud_impl = #false,
+            ~led: led_impl = #false,
+            ~lbp = 0):
     nonfinal
-    constructor(~nud: nud = #false, ~led: led = #false, ~lbp: lbp = 0):
-        super(nud, led, lbp)
     method nud(): nud_impl(this)
     method led(lhs): led_impl(this, lhs)
     method prefix(): pratt(30)
     method rhs(): pratt(this.lbp)
 
-class RParen():
-    extends Token
-    constructor(): super()()
+class RParen(): extends Token
 
 def lex:
     lexer
