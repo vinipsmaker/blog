@@ -1,4 +1,5 @@
 #import "/content/blog.typ": *
+#import "@preview/gentle-clues:1.3.1": *
 #show: main.with(
   title: "Pratt parsing uncommon expression rules",
   desc: "A Pratt parsing tutorial on how to parse partially ordered operator precedence and implicit binary operators",
@@ -308,3 +309,21 @@ Easy again. This time the trick was to use 1-token of lookahead to check:
 
 So we just interpret the juxtaposition as a multiplication implicitly before
 proceeding to the led loop.
+
+#info(title: "EDIT (2026/04/10)")[
+
+Later I realized that the same result could be achieved without changing Pratt
+at all just by adding a led to the token that previously was just a nud:
+
+```rhombus
+| digit+: Token(
+    ~nud: fun(_): String.to_int(lexeme),
+    ~led: fun(_, lhs): lhs * String.to_int(lexeme),
+    ~lbp: 1000)
+```
+
+This approach achieves the same result. Either way, I decided to keep this
+section of the text. It's still useful to show that Pratt is *easy* to extend
+which was the original intent.
+
+]
