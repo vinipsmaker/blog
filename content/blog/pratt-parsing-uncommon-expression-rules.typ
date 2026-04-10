@@ -8,7 +8,7 @@
     "pratt",
     "rhombus",
   ),
-  show-outline: true,
+  show-outline: false,
 )
 
 ==== Introduction
