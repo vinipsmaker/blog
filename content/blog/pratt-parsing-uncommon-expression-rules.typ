@@ -147,8 +147,7 @@ fun pratt(rbp = 0):
     let mutable t = token
     advance()
     let mutable expr = t.nud()
-    for (_ in 0..):
-        break_when: rbp >= token.lbp
+    while rbp < token.lbp:
         t := token
         advance()
         expr := t.led(expr)
@@ -289,9 +288,8 @@ fun pratt(rbp = 0):
     let mutable t = token
     advance()
     let mutable expr = t.nud()
-    for (_ in 0..):
-        for (_ in 0..):
-            break_when: token.led_impl || !token.nud_impl
+    while #true:
+        while !token.led_impl && token.nud_impl:
             t := token
             advance()
             expr := expr * t.nud()
