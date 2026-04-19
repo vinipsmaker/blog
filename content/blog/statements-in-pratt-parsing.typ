@@ -127,7 +127,7 @@ std::shared_ptr<ast::Expr> parse_lbrace(
     bool value_is_void = true;
     while (r.code() != rbrace) {
         // parse_statement() is the one querying/dispatching on fuds
-        if (parse_statement(context, r, exprs, value_is_void)) {
+        if (parse_statement(context, r, exprs)) {
             continue;
         }
 
@@ -147,7 +147,7 @@ std::shared_ptr<ast::Expr> parse_lbrace(
 
 bool parse_statement(
     ParsingContext& context, reader& r,
-    std::vector<std::shared_ptr<ast::Expr>>& out, bool& value_is_void)
+    std::vector<std::shared_ptr<ast::Expr>>& out)
 {
     if (at_or_zero(fud_table, r.code())) {
         auto tok = r;
