@@ -43,34 +43,31 @@ for the opening brace is going to query the fud table before invoking
 Pratt. This way it'll query keywords that only happen at the start of -- for the
 lack of a better word -- sentences.
 
-To illustrate the idea I'll just copy'n'paste a single code snippet from
-Crockford's site#footnote[https://crockford.com/javascript/tdop/tdop.html] (but
-please do check his site as he goes into more detail on the issue):
+To illustrate the idea I'll just show a stripped down version of code straight
+from Crockford's site#footnote[https://crockford.com/javascript/tdop/tdop.html]
+(but please do check his site as he goes into more detail on the issue):
 
 ```javascript
-// taken from https://crockford.com/javascript/tdop/tdop.html
-var statement = function () {
-    var n = token, v;
+// a simplified version of code taken from
+// https://crockford.com/javascript/tdop/tdop.html
+function statement() {
+    var n = token;
     if (n.std) {
         advance();
-        scope.reserve(n);
         return n.std();
     }
-    v = expression(0);
-    if (!v.assignment && v.id !== "(") {
-        v.error("Bad expression statement.");
-    }
+    var v = expression(0);
     advance(";");
     return v;
 };
 
-var statements = function () {
-    var a = [], s;
+function statements() {
+    var a = [];
     while (true) {
         if (token.id === "}" || token.id === "(end)") {
             break;
         }
-        s = statement();
+        var s = statement();
         if (s) {
             a.push(s);
         }
@@ -78,11 +75,9 @@ var statements = function () {
     return a.length === 0 ? null : a.length === 1 ? a[0] : a;
 };
 
-prefix("function", function () {
+prefix("function", function() {
     var a = [];
-    new_scope();
     if (token.arity === "name") {
-        scope.define(token);
         this.name = token.value;
         advance();
     }
@@ -92,7 +87,6 @@ prefix("function", function () {
             if (token.arity !== "name") {
                 token.error("Expected a parameter name.");
             }
-            scope.define(token);
             a.push(token);
             advance();
             if (token.id !== ",") {
@@ -107,7 +101,6 @@ prefix("function", function () {
     this.second = statements();
     advance("}");
     this.arity = "function";
-    scope.pop();
     return this;
 });
 ```
