@@ -114,8 +114,6 @@ I've been developing since last year:
 std::shared_ptr<ast::Expr> parse_lbrace(
     ParsingContext& context, reader tok, reader& r)
 {
-    [[maybe_unused]] ParsingContext::ScopeGuard scope_guard{context};
-
     std::vector<std::shared_ptr<ast::Expr>> exprs;
     bool value_is_void = true;
     while (r.code() != rbrace) {
