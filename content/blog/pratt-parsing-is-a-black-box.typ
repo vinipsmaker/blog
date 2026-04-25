@@ -455,8 +455,8 @@ meta!).
 Usually the lexer is the most neglected part of a compiler. It's a solved
 problem. There's no reason to waste time on its design. You use a lexer
 generator to implement an efficient lexer, and move on to never look back again.
-However Pratt -- the algorithm -- is just 9 lines of Rhombus code. Your parser
-is most likely bigger than the lexer already. Just on the face of this your
+However Pratt -- the algorithm -- is just 9 lines of Rhombus code. Your lexer
+is most likely bigger than the parser already. Just on the face of this your
 lexer is already playing a bigger part on your project by at least some metric
 (even if an unimportant one).
 
@@ -530,12 +530,12 @@ parser for each -- `parse_expr()` and `parse_type()`. It's a simple trick that
 doesn't demand much explanation really, but gets you very far. The code almost
 writes itself after you get the idea.
 
-The only caveat is that you lexer must adhere to a pull design instead of lexing
-all tokens upfront. For some reason people like to only design push APIs that
-fully steal execution flow, and these people are addicted to implement lexers
-that do all the work upfront. It's a popular arrangement, but not one that will
-work for modal lexing. Pratt itself is a push design so in the end you'd have a
-mix of designs.
+The only caveat is that your lexer must adhere to a pull design instead of
+lexing all tokens upfront. For some reason people like to only design push APIs
+that fully steal execution flow, and these people are addicted to implement
+lexers that do all the work upfront. It's a popular arrangement, but not one
+that will work for modal lexing. Pratt itself is a push design so in the end
+you'd have a mix of designs.
 
 Moving on to the next topic, there are more lexer tricks that I have to share,
 but for today I just have one suggestion: don't design your lexers to do any IO
