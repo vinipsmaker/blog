@@ -1,49 +1,66 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
-import { typst } from "astro-typst";
+import { defineConfig, envField } from "astro/config";
 import sitemap from "@astrojs/sitemap";
+import { typst } from "astro-typst";
+import { loadEnv } from "vite";
 
-// https://astro.build/config
+// Please check `defineConfig/env` in astro.config.mjs for schema
+const e = loadEnv(process.env.NODE_ENV || "", process.cwd(), "");
+const { SITE, URL_BASE } = e;
+
+const EnvStr = (optional = true) =>
+    envField.string({ context: "client", access: "public", optional });
+const MustEnvStr = (optional = false) => EnvStr(optional);
+
 export default defineConfig({
-  site: 'https://vinipsmaker.github.io/blog',
-  base: '/blog/',
-  
-  integrations: [
-    sitemap({
-      // Basic sitemap configuration
-      changefreq: 'weekly',
-      priority: 0.7,
-      lastmod: new Date(),
-    }),
-    typst({
-      target: (id) => {
-        return "html";
-      }
-    }),
-  ],
-  
-  // Build configuration
-  build: {
-    inlineStylesheets: 'auto',
-  },
-  
-  // Vite configuration
-  vite: {
-    build: {
-      cssCodeSplit: true,
-      minify: 'esbuild',
-      sourcemap: false,
+    // Whether to prefetch links while hovering.
+    // See: https://docs.astro.build/en/guides/prefetch/
+    prefetch: {
+        prefetchAll: true,
     },
-  },
-  
-  // Output configuration
-  output: 'static',
-  
-  // Markdown configuration
-  markdown: {
-    shikiConfig: {
-      theme: 'github-light',
-      wrap: true,
+
+    site: SITE,
+    base: URL_BASE,
+
+    env: {
+        schema: {
+            SITE: MustEnvStr(),
+            URL_BASE: EnvStr(),
+
+            SITE_TITLE: EnvStr(),
+            SITE_INDEX_TITLE: EnvStr(),
+            SITE_DESCRIPTION: EnvStr(),
+
+            // # Please remove them if you don't like to use backend.
+            // `;` separated list of backend addresses
+            BACKEND_ADDR: EnvStr(),
+            BAIDU_VERIFICATION_CODE: EnvStr(),
+        },
     },
-  },
+
+    integrations: [
+        sitemap(),
+        typst({
+            options: {
+                remPx: 16,
+            },
+            mode: {
+                default: "html",
+                detect: (id) => id.endsWith('.svg.typ') ? "svg" : "html",
+            },
+        }),
+    ],
+
+    vite: {
+        build: {
+            assetsInlineLimit(filePath, content) {
+                const KB = 1024;
+                return content.length < (filePath.endsWith(".css") ? 100 * KB : 4 * KB);
+            },
+        },
+        ssr: {
+            external: ["@myriaddreamin/typst-ts-node-compiler"],
+            noExternal: ["@fontsource-variable/inter"],
+        },
+    },
 });

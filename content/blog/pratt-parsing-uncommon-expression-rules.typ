@@ -1,4 +1,4 @@
-#import "/content/blog.typ": *
+#import "/typ/templates/blog.typ": *
 #import "@preview/gentle-clues:1.3.1": *
 #show: main.with(
   title: "Pratt parsing uncommon expression rules",

@@ -1,38 +1,90 @@
 ---
-// Header component with navigation
+import { kUrlBase, kSiteLogo } from "$consts";
 
-// Automatically determine page type and content based on URL
-const currentPath = Astro.url.pathname;
-const baseUrl = import.meta.env.BASE_URL;
+import { ThemeToggle } from "@myriaddreamin/tylant-theme-toggle";
 
-// Helper function to normalize paths by removing trailing slashes
-const normalizePath = (path: string) => path.endsWith('/') && path.length > 1 ? path.slice(0, -1) : path;
+import HeaderLink from "./HeaderLink.astro";
 
-const normalizedCurrentPath = normalizePath(currentPath);
-const normalizedBaseUrl = normalizePath(baseUrl);
+interface Props {
+  articleId?: string;
+}
 
-const isHomePage = normalizedCurrentPath === normalizedBaseUrl || normalizedCurrentPath === '';
-const isAnyBlogPage = currentPath.includes('/blog');
+const { articleId } = Astro.props;
 ---
 
 <header>
   <nav>
-    <div class="logo-container">
-      <h2 class="logo">
-        <a href={import.meta.env.BASE_URL} class="logo-link">
-          <span class="logo-text">vinipsmaker</span>
-        </a>
-      </h2>
-    </div>
+    <h2 class="logo"><a href={`${kUrlBase}/`}>{kSiteLogo}</a></h2>
     <div class="internal-links">
-      <a href={import.meta.env.BASE_URL} class={`nav-link ${isHomePage ? 'active' : ''}`}>
-        <span class="nav-text">About</span>
-        <div class="nav-indicator"></div>
-      </a>
-      <a href={`${import.meta.env.BASE_URL}blog`} class={`nav-link ${isAnyBlogPage ? 'active' : ''}`}>
-        <span class="nav-text">Blog</span>
-        <div class="nav-indicator"></div>
+      <HeaderLink href={`${kUrlBase}/`}>Home</HeaderLink>
+      <HeaderLink href={`${kUrlBase}/blog`}>Posts</HeaderLink>
+      <HeaderLink href={`${kUrlBase}/about`}>About</HeaderLink>
+    </div>
+    <div class="social-links">
+      <span style="width: 2em;" aria-hidden="true">&nbsp;</span>
+      <ThemeToggle />
       </a>
     </div>
   </nav>
-</header> 
+</header>
+<style>
+  .logo {
+    font-weight: 700;
+    font-style: italic;
+  }
+  header {
+    margin: 0;
+    padding: 0 1em;
+    background: var(--nav-bg-color);
+    box-shadow: 0 2px 8px rgba(var(--black), 5%);
+  }
+  h2 {
+    margin: 0;
+    font-size: 1em;
+  }
+
+  h2 a,
+  h2 a.active {
+    text-decoration: none;
+  }
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: min(56rem, calc(100% - 2em));
+    margin: auto;
+  }
+  nav a {
+    padding: 1em 0.5em;
+    border-bottom: 4px solid transparent;
+    text-decoration: none;
+  }
+  nav a.active {
+    text-decoration: none;
+    border-bottom-color: var(--accent);
+  }
+  .social-links,
+  .social-links a {
+    display: flex;
+  }
+  @media (max-width: 680px) {
+    .logo,
+    .social-links a.ls-icon {
+      display: none;
+    }
+  }
+  @media (max-width: 400px) {
+    nav {
+      font-size: 14px;
+    }
+  }
+  @media (max-width: 370px) {
+    .internal-links {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .internal-links a {
+      flex: 1 0 70px;
+    }
+  }
+</style>

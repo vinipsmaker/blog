@@ -1,4 +1,4 @@
-#import "/content/blog.typ": *
+#import "/typ/templates/blog.typ": *
 #show: main.with(
   title: "Statements in Pratt parsing",
   desc: "A small note pointing to material on parsing statements using Pratt",
