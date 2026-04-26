@@ -643,7 +643,7 @@ you're changing Pratt's algorithm itself as done by Alex Kladov in
 2020#footnote[https://matklad.github.io/2020/04/13/simple-but-powerful-pratt-parsing.html]
 (I've done the same mistake myself once) to make accommodations because you
 refuse to reason in terms of nuds & leds (or any other reason), you're missing
-out and should start again. Using Pratt parsing as a black box abstraction will
+out and should start over. Using Pratt parsing as a black box abstraction will
 remove your ability to change Pratt's algorithm, and it may help in adapting
 your mindset. That's my advice to get you started.
 
