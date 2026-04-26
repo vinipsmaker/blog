@@ -7,6 +7,7 @@
     "programming",
     "parsing",
     "pratt",
+    "rhombus",
   ),
   show-outline: false,
 )
@@ -271,7 +272,71 @@ Pratt just like a mere variation of precedence climbing because by then you'll
 have already been exposed to all the power unlocked by Pratt parsing. Andy Chu's
 blog post on Pratt parsing without prototypal inheritance is worth reading as it
 contrasts two opposing styles of writing Pratt
-parsers#footnote[https://www.oilshell.org/blog/2016/11/03.html].
+parsers#footnote[https://www.oilshell.org/blog/2016/11/03.html]. Here's a
+minimal calculator written in Rhombus that is (stylistically) closer to a
+version that'd use prototypal inheritance than the style that Andy Chu shows:
+
+```rhombus
+#lang rhombus
+
+import:
+    parser/lex open
+
+class Token(~nud: nud_impl = #false,
+            ~led: led_impl = #false,
+            ~lbp = 0):
+    nonfinal
+    method nud(): nud_impl(this)
+    method led(lhs): led_impl(this, lhs)
+    method prefix(): expression(30)
+    method rhs(): expression(this.lbp)
+
+class RParen(): extends Token
+
+def lex:
+    lexer
+    | "+": Token(
+        ~nud: (_.prefix()),
+        ~led: fun(tok, lhs): lhs + tok.rhs(),
+        ~lbp: 10)
+    | "-": Token(
+        ~nud: (-_.prefix()),
+        ~led: fun(tok, lhs): lhs - tok.rhs(),
+        ~lbp: 10)
+    | "*": Token(
+        ~led: fun(tok, lhs): lhs * tok.rhs(),
+        ~lbp: 20)
+    | "/": Token(
+        ~led: fun(tok, lhs): lhs / tok.rhs(),
+        ~lbp: 20)
+    | digit+: Token(~nud: fun(_): String.to_int(lexeme))
+    | " "+: lex(input_port)
+    | "(": Token(
+        ~nud: fun(_):
+                  let ret = expression()
+                  guard token is_a RParen
+                  | error("expected closing parens")
+                  advance()
+                  ret)
+    | ")": RParen()
+    | ~eof: Token()
+
+def input = Port.Input.open_string("4 * (3 - 3) / 2 + -10")
+def mutable token = lex(input)
+fun advance(): token := lex(input)
+
+fun expression(rbp = 0):
+    let mutable t = token
+    advance()
+    let mutable left = t.nud()
+    while rbp < token.lbp:
+        t := token
+        advance()
+        left := t.led(left)
+    left
+
+println(expression())
+```
 
 ==== Algorithmic & grammar constraints
 
