@@ -632,8 +632,22 @@ get used as argument for the nuds & leds, but I just store/pass the lexer itself
 instead. My lexer is cheap to copy so there's no need to create a class to pass
 tokens around. The layer expecting a token can decode from the matched lexeme
 directly anyway so the lexer only needs to store a few pointers to the original
-input text. Furthermore this design allows me to rollback 1 token which is
-something that I use in the nud for `<`:
+input text. Here's the code parsing decimal literals in my project to showcase
+the decode-from-lexeme-directly trick:
+
+```cpp
+std::shared_ptr<ast::Expr> parse_declit(
+    ParsingContext& /*context*/, reader tok, reader& /*r*/)
+{
+    auto apint = syntax::parse_declit(tok.literal());
+    return ast::make_expr<ast::IntegerValue>(
+        tok.line(), tok.column(),
+        llvm::DynamicAPInt{apint.zext(apint.getBitWidth() + 1)});
+}
+```
+
+Furthermore this design allows me to rollback 1 token which is something that I
+use in the nud for `<`:
 
 ```cpp
 // this nud is called by parse_expr() (hence expr-scope)
