@@ -1,5 +1,5 @@
 #import "/typ/templates/blog.typ": *
-#import "@preview/gentle-clues:1.3.1": *
+#import "@preview/babble-bubbles:0.1.0": *
 #show: main.with(
   title: "Pratt parsing uncommon expression rules",
   desc: "A Pratt parsing tutorial on how to parse partially ordered operator precedence and implicit binary operators",
@@ -12,7 +12,7 @@
   show-outline: false,
 )
 
-==== Introduction
+= Introduction
 
 Pratt parsing is a powerful parsing technique to parse programming
 languages. It's as much of an organizational pattern for the parser code as it's
@@ -85,7 +85,7 @@ documented in the wild:
 - Partial precedence ordering for operator precedence.
 - Juxtaposition as an implicit operator.
 
-==== The structure of the code samples
+= The structure of the code samples
 
 I'll use the language Rhombus for all code samples as that's a high-level
 dynamic language where lexer definitions won't waste a lot of space. Rhombus
@@ -186,7 +186,7 @@ through abstractions jumping from here to there and back again just to make
 sense of what's happening. This is peak abstraction for a Pratt parsing
 tutorial.
 
-==== Partial precedence ordering for operator precedence
+= Partial precedence ordering for operator precedence
 
 Folks behind Carbonlang were inspired by Hasse diagrams to define a partial
 order for the precedence between the operators.
@@ -258,7 +258,7 @@ And use the nud for parentheses to reset the group back to zero:
 
 Done. We just implemented Carbon's P0555. Easy peasy.
 
-==== Juxtaposition as an implicit operator
+= Juxtaposition as an implicit operator
 
 In programming languages, the operator for multiplication is usually denoted by
 `*`. However, mathematicians and physicists traditionally do not use the

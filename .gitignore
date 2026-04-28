@@ -24,3 +24,7 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# NixOS files
+flake.nix
+flake.lock
