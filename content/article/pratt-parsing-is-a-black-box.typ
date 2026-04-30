@@ -12,7 +12,7 @@
   show-outline: false,
 )
 
-==== Introduction
+= Introduction
 
 It caught my attention that most of Pratt parsing tutorials that I've stumbled
 on spend almost all of their time explaining Pratt's algorithm and none
@@ -55,7 +55,7 @@ parsing. The point won't be about memorizing any of it though. The point is
 about acquiring a mindset. As long as you acquire the mindset you don't need to
 even bother to remember even a single word of what I say here.
 
-==== Nuds & leds
+= Nuds & leds
 
 The only tutorial on Pratt parsing that I can firmly recommend to someone who
 has never been exposed to the topic is actually a talk that Douglas Crockford
@@ -338,7 +338,7 @@ fun expression(rbp = 0):
 println(expression())
 ```
 
-==== Algorithmic & grammar constraints
+= Algorithmic & grammar constraints
 
 The previous section might have been the densest in this whole blog post so I
 want to tune it down while you incubate the Pratt mindset and go on trivial
@@ -381,7 +381,7 @@ things for now:
   algorithmic properties to talk about). Incremental parsing is used in tools
   such as tree-sitter.
 
-==== Right-to-left associative operators
+= Right-to-left associative operators
 
 My whole argument today is that Pratt is a black box abstraction, so let's go
 with this argument and lay down what contracts you need to respect to use Pratt:
@@ -450,7 +450,7 @@ to speak. A trick you ought to know. Why does it work? It doesn't matter. It's a
 black box for today. Tomorrow it might matter, but today you should only be
 focusing on how to use Pratt, not why it works.
 
-==== Macros freely interleave between lexing & parsing
+= Macros freely interleave between lexing & parsing
 
 Why even write a section for macros when most language designers won't add them?
 Pratt macros are just nuds/leds implemented in the language that your code is
@@ -515,7 +515,7 @@ leds are patterns that you'd likely see in Pratt macros. The code being parsed
 is teaching the very parser that is parsing it on how to do so (tell me about
 meta!).
 
-==== The lexer matters again
+= The lexer matters again
 
 Usually the lexer is the most neglected part of a compiler. It's a solved
 problem. There's no reason to waste time on its design. You use a lexer
@@ -711,7 +711,7 @@ project. Ironically perhaps, but I acquired the mindset that enabled me to come
 up with these lexer tricks from past experience parsing HTTP and JSON which has
 nothing to do with the techniques that one uses to parse programming languages.
 
-==== Summary
+= Summary
 
 Pratt is a shift in parsing mindset. You must get comfortable on breaking
 grammatical structures into nuds & leds. It's totally okay to write shortcuts
