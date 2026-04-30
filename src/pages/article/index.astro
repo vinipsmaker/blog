@@ -47,10 +47,10 @@ const posts = (await getCollection("blog")).sort(
           {
             posts.map((post) => (
               <li
-                data-blog-id={post.id}
-                data-blog-meta={JSON.stringify(post.data)}
+                data-article-id={post.id}
+                data-article-meta={JSON.stringify(post.data)}
               >
-                <a class="heading" href={`${kUrlBase}/blog/${post.id}/`}>
+                <a class="heading" href={`${kUrlBase}/article/${post.id}/`}>
                   <h2>
                     <span class="title">{post.data.title}</span>
                   </h2>

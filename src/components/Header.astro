@@ -17,13 +17,12 @@ const { articleId } = Astro.props;
     <h2 class="logo"><a href={`${kUrlBase}/`}>{kSiteLogo}</a></h2>
     <div class="internal-links">
       <HeaderLink href={`${kUrlBase}/`}>Home</HeaderLink>
-      <HeaderLink href={`${kUrlBase}/blog`}>Posts</HeaderLink>
+      <HeaderLink href={`${kUrlBase}/article`}>Posts</HeaderLink>
       <HeaderLink href={`${kUrlBase}/about`}>About</HeaderLink>
     </div>
     <div class="social-links">
       <span style="width: 2em;" aria-hidden="true">&nbsp;</span>
       <ThemeToggle />
-      </a>
     </div>
   </nav>
 </header>
