@@ -12,8 +12,8 @@
 )
 
 One thing that confuses me about Pratt implementations in general is the
-arbitrary use of the terms left and right. It's fair to recognize that the whole
-issue solved by operator-precedence parsing is whether a given
+arbitrary use of the terms left and right. It's fair to acknowledge that the
+whole issue solved by operator-precedence parsing is whether a given
 term/subexpression binds to left or right:
 
 ```
@@ -66,7 +66,7 @@ class Multiplication():
 ```
 
 After using Pratt extensively for a language that I've been developing since
-last year, _nud_ & _led_ were terms that never damaged me. Nud & led are the
+last year, _nud_ & _led_ were terms that never held me back. Nud & led are the
 terms that beginners in the Pratt school usually complain about, but introducing
 new terms for new concepts help to shape your mental model to use the new
 framework. They put you in the proper state of mind to reason about the problem,
